@@ -37,5 +37,30 @@ namespace CityInfo.API.Controllers
             var bytes = System.IO.File.ReadAllBytes(pathToFile);
             return File(bytes, contentType, Path.GetFileName(pathToFile));
         }
+
+        [HttpPost]
+        public async Task<ActionResult> CreateFile(IFormFile file)
+        {
+            // Comprueba los inputs. Pon un límite en el tamaño de los ficheros para evitar
+            // grandes ataques de 'uploads'. 
+            // Solo acepta pdfs (comprueba el content-type)
+            if (file.Length == 0 || file.Length > 20971520 || file.ContentType != "application/pdf")
+            {
+                return BadRequest("No file or an invalid one has been inputted.");
+            }
+
+            // Crea la ruta del fichero. Evita usar file.FileName, ya que un atacante puede proporcionar
+            // uno malicioso, incluyendo rutas completas o relativas.
+            var path = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                $"uploaded_file_{Guid.NewGuid()}.pdf");
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return Ok("Your file has been uploaded successfully.");
+        }
     }
 }
