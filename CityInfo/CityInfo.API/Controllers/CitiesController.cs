@@ -21,9 +21,9 @@ namespace CityInfo.API.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CityWithoutPointsOfInterestDto>>> GetCities(
-            string? name)
+            string? name, string? searchQuery)
         {
-            var cityEntities = await _cityInfoRepository.GetCitiesAsync(name);
+            var cityEntities = await _cityInfoRepository.GetCitiesAsync(name, searchQuery);
 
             return Ok(_mapper.Map<IEnumerable<CityWithoutPointsOfInterestDto>>(cityEntities));
         }
