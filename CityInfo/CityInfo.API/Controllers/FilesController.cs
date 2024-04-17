@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 
 namespace CityInfo.API.Controllers
 {
-    [Route("api/[controller]")]
-    [Authorize]
+    [Route("api/v{version:apiVersion}/files")]
     [ApiController]
     public class FilesController : ControllerBase
     {
@@ -20,6 +20,7 @@ namespace CityInfo.API.Controllers
         }
 
         [HttpGet("{fileId}")]
+        [ApiVersion(0.1, Deprecated = true)]
         public ActionResult GetFile(string fileId)
         {
             var pathToFile = "creating-the-api-and-returning-resources-slides.pdf";
