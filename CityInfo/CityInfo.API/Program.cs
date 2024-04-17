@@ -75,6 +75,14 @@ builder.Services.AddAuthentication("Bearer")
         }
     );
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("MustBeFromAntwerp", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("city", "Antwerp");
+    });
+});
 
 var app = builder.Build();
 
