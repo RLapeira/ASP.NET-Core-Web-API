@@ -158,8 +158,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseForwardedHeaders();
 
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(setupAction =>
     {
@@ -171,7 +171,7 @@ if (app.Environment.IsDevelopment())
                 description.GroupName.ToUpperInvariant());
         }
     });
-}
+//}
 
 app.UseHttpsRedirection();
 
