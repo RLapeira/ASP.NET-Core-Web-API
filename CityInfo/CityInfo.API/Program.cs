@@ -3,6 +3,7 @@ using Asp.Versioning.ApiExplorer;
 using CityInfo.API;
 using CityInfo.API.DbContexts;
 using CityInfo.API.Services;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -142,6 +143,11 @@ builder.Services.AddSwaggerGen(setupAction =>
         });
 });
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -149,6 +155,8 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler();
 }
+
+app.UseForwardedHeaders();
 
 if (app.Environment.IsDevelopment())
 {
