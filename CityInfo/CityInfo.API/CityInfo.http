@@ -25,3 +25,21 @@ Content-Type: application/json
 
 GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities/1/pointsofinterest/{{poiid}}
 Accept:application/json
+
+###
+
+// obtener un token
+POST {{schema}}://{{hostname}}:{{port}}/api/authentication/authenticate
+Content-Type: application/json
+
+{
+  "username": "KevinDockx",
+  "password": "This is a relatively long sentence that acts as my password"
+}
+
+###
+
+// GET request con autenticación
+GET {{schema}}://{{hostname}}:{{port}}/api/v2/cities
+Authorization: Bearer 
+//El Bearer seguido del tokenObtenido
